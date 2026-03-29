@@ -3,5 +3,14 @@ using DeepSigma.DataAccess.WebSearch.Internal.Dto;
 
 namespace DeepSigma.DataAccess.WebSearch.Internal;
 
+/// <summary>
+/// Source-generated <see cref="System.Text.Json.Serialization.JsonSerializerContext"/> used to
+/// deserialize <see cref="SearxngJsonResponse"/> without runtime reflection.
+/// </summary>
+/// <remarks>
+/// Using source generation makes deserialization trim-safe and compatible with
+/// ahead-of-time (AOT) compilation. The context is accessed via <see cref="Default"/>
+/// inside <see cref="SearxngClient"/>.
+/// </remarks>
 [JsonSerializable(typeof(SearxngJsonResponse))]
 internal partial class JsonContext : JsonSerializerContext { }

@@ -53,7 +53,7 @@ public class SearxngClientTests
             Content = new StringContent(json, Encoding.UTF8, "application/json")
         });
 
-        var result = await client.SearchAsync(new SearchRequest("test"));
+        var result = await client.SearchAsync(new SearchRequest("test"), TestContext.Current.CancellationToken);
 
         Assert.Single(result.Results);
         Assert.Equal("Example", result.Results[0].Title);

@@ -10,12 +10,32 @@ using Microsoft.Extensions.Options;
 
 namespace DeepSigma.DataAccess.WebSearch;
 
+/// <summary>
+/// Default implementation of <see cref="ISearxngClient"/> that communicates with a SearXNG
+/// instance over HTTP using a typed <see cref="HttpClient"/> managed by
+/// <see cref="System.Net.Http.IHttpClientFactory"/>.
+/// </summary>
+/// <remarks>
+/// Register this client via <see cref="ServiceCollectionExtensions.AddSearxngClient"/> rather than
+/// constructing it directly. That extension method configures the <see cref="HttpClient"/>,
+/// eagerly validates <see cref="SearxngOptions"/>, and attaches a standard resilience pipeline
+/// (retry, circuit breaker, and attempt timeout).
+/// </remarks>
 public sealed class SearxngClient : ISearxngClient
 {
     private readonly HttpClient _httpClient;
     private readonly IOptions<SearxngOptions> _options;
     private readonly ILogger<SearxngClient> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="SearxngClient"/>.
+    /// </summary>
+    /// <param name="httpClient">
+    /// The typed <see cref="HttpClient"/> configured and injected by
+    /// <see cref="System.Net.Http.IHttpClientFactory"/>.
+    /// </param>
+    /// <param name="options">The resolved <see cref="SearxngOptions"/> for this client.</param>
+    /// <param name="logger">Logger used to record query latency and result counts.</param>
     public SearxngClient(
         HttpClient httpClient,
         IOptions<SearxngOptions> options,
@@ -26,6 +46,38 @@ public sealed class SearxngClient : ISearxngClient
         _logger = logger;
     }
 
+    /// <inheritdoc/>
+    /// <remarks>
+    /// Builds a percent-encoded query string from <paramref name="request"/>, dispatches an
+    /// HTTP GET to <see cref="SearxngOptions.SearchPath"/>, and maps the JSON response to a
+    /// <see cref="SearchResponse"/>. HTTP status codes are translated to typed exceptions:
+    /// <list type="table">
+    ///   <listheader>
+    ///     <term>Condition</term>
+    ///     <description>Exception thrown</description>
+    ///   </listheader>
+    ///   <item>
+    ///     <term>HTTP 403</term>
+    ///     <description><see cref="SearxngUnsupportedFormatException"/> — JSON format is disabled on the instance.</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>HTTP 4xx (other)</term>
+    ///     <description><see cref="SearxngBadRequestException"/> — includes the exact status code.</description>
+    ///   </item>
+    ///   <item>
+    ///     <term>Request timeout</term>
+    ///     <description><see cref="SearxngTimeoutException"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <term>Network failure</term>
+    ///     <description><see cref="SearxngUnavailableException"/></description>
+    ///   </item>
+    ///   <item>
+    ///     <term>Malformed JSON body</term>
+    ///     <description><see cref="SearxngParseException"/></description>
+    ///   </item>
+    /// </list>
+    /// </remarks>
     public async Task<SearchResponse> SearchAsync(
         SearchRequest request,
         CancellationToken cancellationToken = default)

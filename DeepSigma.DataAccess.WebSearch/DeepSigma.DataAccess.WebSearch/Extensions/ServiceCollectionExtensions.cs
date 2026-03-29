@@ -3,12 +3,25 @@ using Microsoft.Extensions.Options;
 
 namespace DeepSigma.DataAccess.WebSearch;
 
+/// <summary>
+/// Extension methods for registering SearXNG client services with
+/// <see cref="IServiceCollection"/>.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>
     /// Registers <see cref="ISearxngClient"/> with a typed <see cref="System.Net.Http.HttpClient"/>,
     /// options validation, and a standard resilience pipeline (retry + circuit breaker + timeout).
     /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> to add services to.</param>
+    /// <param name="configure">A delegate that configures the <see cref="SearxngOptions"/> for this client.</param>
+    /// <returns>The original <paramref name="services"/> instance to enable method chaining.</returns>
+    /// <remarks>
+    /// <see cref="SearxngOptions"/> are validated eagerly at application startup via
+    /// <c>ValidateOnStart</c>. The <see cref="System.Net.Http.HttpClient"/> timeout is set to
+    /// <see cref="System.Threading.Timeout.InfiniteTimeSpan"/> so that the resilience pipeline's
+    /// attempt timeout takes precedence rather than the hard client timeout.
+    /// </remarks>
     public static IServiceCollection AddSearxngClient(
         this IServiceCollection services,
         Action<SearxngOptions> configure)
