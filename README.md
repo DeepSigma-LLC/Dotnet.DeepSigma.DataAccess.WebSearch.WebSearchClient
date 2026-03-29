@@ -455,10 +455,10 @@ DeepSigma.DataAccess.WebSearch.Test/
 
 ## Testing
 
-The test suite uses [xUnit v3](https://xunit.net/) and runs entirely in-process with a `FakeHttpMessageHandler` — no live SearXNG instance is required.
+The test suite uses [xUnit v3](https://xunit.net/) and runs entirely in-process with a `FakeHttpMessageHandler` — no live SearXNG instance is required for the unit tests.
 
 ```shell
-dotnet test
+dotnet test --filter "Category!=Live"
 ```
 
 ### Test coverage
@@ -468,6 +468,22 @@ dotnet test
 | `QueryBuilderTests` | 8 | Query string encoding, all optional parameters, omission of null/empty values, percent-encoding of special characters |
 | `ResponseMappingTests` | 5 | Valid result mapping, null result list, URL filtering (blank URLs excluded), metadata population, empty title fallback |
 | `SearxngClientTests` | 10 | Successful response, empty results, null/empty/whitespace query guards, HTTP 403, HTTP 4xx, network failure, malformed JSON, metadata round-trip |
+
+### Running live tests
+
+Live tests require a local SearXNG instance. The default SearXNG Docker image ships with JSON format **disabled**, which causes HTTP 403 on API requests. Use the provided `docker-compose.yml` and `searxng-settings.yml` to start a correctly configured instance:
+
+```shell
+docker compose up
+```
+
+This starts SearXNG at `http://localhost:8080` with `json` added to `search.formats`. Once running, execute the live tests:
+
+```shell
+dotnet test --filter "Category=Live"
+```
+
+Live tests skip automatically when no instance is reachable and skip with an informational message when the instance is running but has JSON format disabled — they never cause a false failure in CI.
 
 ---
 
