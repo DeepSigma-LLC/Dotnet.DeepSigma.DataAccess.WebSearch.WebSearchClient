@@ -155,7 +155,9 @@ Validation rules enforced eagerly at application startup:
 
 ### Registering with Dependency Injection
 
-`AddSearxngClient` registers `ISearxngClient` as a typed `HttpClient`, validates `SearxngOptions` eagerly on startup, and attaches a standard resilience pipeline:
+`AddSearxngClient` registers `ISearxngClient` as a typed `HttpClient`, validates `SearxngOptions` eagerly on startup, and attaches a standard resilience pipeline. Two calling styles are supported:
+
+**Configure via delegate** (recommended for `appsettings.json` integration):
 
 ```csharp
 services.AddSearxngClient(options =>
@@ -163,6 +165,17 @@ services.AddSearxngClient(options =>
     options.BaseUri   = new Uri(builder.Configuration["SearXNG:BaseUri"]!);
     options.Timeout   = TimeSpan.FromSeconds(8);
     options.UserAgent = "MyApp/1.0 (+https://myapp.example.com)";
+});
+```
+
+**Pass a pre-built instance** (useful when options are constructed in code):
+
+```csharp
+services.AddSearxngClient(new SearxngOptions
+{
+    BaseUri   = new Uri("https://searxng.example.com"),
+    Timeout   = TimeSpan.FromSeconds(8),
+    UserAgent = "MyApp/1.0 (+https://myapp.example.com)"
 });
 ```
 

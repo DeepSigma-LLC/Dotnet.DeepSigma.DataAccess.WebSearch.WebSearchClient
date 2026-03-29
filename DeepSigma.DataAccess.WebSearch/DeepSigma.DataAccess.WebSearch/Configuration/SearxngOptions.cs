@@ -11,18 +11,21 @@ namespace DeepSigma.DataAccess.WebSearch;
 /// </remarks>
 public sealed class SearxngOptions
 {
-    /// <summary>Absolute base URI of the SearXNG instance, e.g. https://searxng.example.com</summary>
-    public required Uri BaseUri { get; init; }
+    /// <summary>
+    /// Absolute base URI of the SearXNG instance, e.g. https://searxng.example.com.
+    /// Must be set to an absolute URI before the client is used; validated at startup.
+    /// </summary>
+    public Uri BaseUri { get; set; } = null!;
 
     /// <summary>Per-attempt timeout. Defaults to 10 seconds.</summary>
-    public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(10);
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
     /// <summary>Path to the search endpoint. Defaults to /search.</summary>
-    public string SearchPath { get; init; } = "/search";
+    public string SearchPath { get; set; } = "/search";
 
     /// <summary>Optional User-Agent header value sent with every request.</summary>
-    public string? UserAgent { get; init; }
+    public string? UserAgent { get; set; }
 
     /// <summary>Probe the instance for JSON-format support at startup.</summary>
-    public bool ProbeInstanceOnStartup { get; init; } = false;
+    public bool ProbeInstanceOnStartup { get; set; } = false;
 }

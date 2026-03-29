@@ -54,4 +54,29 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    /// <summary>
+    /// Registers <see cref="ISearxngClient"/> using a pre-configured <see cref="SearxngOptions"/>
+    /// instance, with a standard resilience pipeline (retry + circuit breaker + timeout).
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> to add services to.</param>
+    /// <param name="options">A fully configured <see cref="SearxngOptions"/> instance.</param>
+    /// <returns>The original <paramref name="services"/> instance to enable method chaining.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="options"/> is <see langword="null"/>.
+    /// </exception>
+    public static IServiceCollection AddSearxngClient(
+        this IServiceCollection services,
+        SearxngOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        return services.AddSearxngClient(o =>
+        {
+            o.BaseUri = options.BaseUri;
+            o.Timeout = options.Timeout;
+            o.SearchPath = options.SearchPath;
+            o.UserAgent = options.UserAgent;
+            o.ProbeInstanceOnStartup = options.ProbeInstanceOnStartup;
+        });
+    }
 }
