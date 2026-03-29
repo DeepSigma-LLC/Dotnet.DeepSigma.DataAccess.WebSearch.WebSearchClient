@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../DeepSigma.DataAccess.WebSearch.Test/DeepSigma.DataAccess.WebSearch.Test.csproj" />
+  <Project Path="DeepSigma.DataAccess.WebSearch.csproj" />
+</Solution>
