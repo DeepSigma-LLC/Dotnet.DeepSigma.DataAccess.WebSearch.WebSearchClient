@@ -1,7 +1,6 @@
 ﻿using DeepSigma.DataAccess.WebPageDataExtraction.Extractors;
 using DeepSigma.DataAccess.WebPageDataExtraction.Fetchers;
 using Microsoft.Extensions.Options;
-using Microsoft.Playwright;
 
 namespace DeepSigma.DataAccess.WebSearch.DemoApp;
 

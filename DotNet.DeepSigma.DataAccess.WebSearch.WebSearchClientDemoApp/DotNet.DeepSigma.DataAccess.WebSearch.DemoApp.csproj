@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DeepSigma.DataAccess.WebSearch.ContentExtraction" Version="1.0.0" />
+    <PackageReference Include="DeepSigma.DataAccess.WebSearch.UrlRetriever" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.6" />
   </ItemGroup>
 
 </Project>

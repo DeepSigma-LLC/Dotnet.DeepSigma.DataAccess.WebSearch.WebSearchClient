@@ -1,8 +1,10 @@
 ﻿using DeepSigma.DataAccess.WebSearch;
-using DeepSigma.DataAccess.WebSearch.Exceptions;
-using DeepSigma.DataAccess.WebSearch.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using DeepSigma.DataAccess.WebSearch.WebSearchClient;
+using DeepSigma.DataAccess.WebSearch.WebSearchClient.Abstraction;
+using DeepSigma.DataAccess.WebSearch.UrlRetriever;
 
 var services = new ServiceCollection();
 
