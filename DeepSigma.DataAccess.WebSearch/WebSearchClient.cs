@@ -14,7 +14,7 @@ public class WebSearchClient(IUrlRetriver urlRetriver, IContentExtractor content
 {
     readonly ILogger<WebSearchClient> logger = logger;
 
-    readonly IUrlRetriver urlRetriver1 = urlRetriver;
+    readonly IUrlRetriver urlRetriver = urlRetriver;
 
     readonly IContentExtractor contentExtractor = contentExtractor;
 
@@ -30,7 +30,7 @@ public class WebSearchClient(IUrlRetriver urlRetriver, IContentExtractor content
 
         try
         {
-            ResponseUrlRetrival response = await urlRetriver1.GetUrls(query, cancellationToken);
+            ResponseUrlRetrival response = await urlRetriver.GetUrls(query, cancellationToken);
 
             return await ExtractAllFromURLs(
                 response.Urls,

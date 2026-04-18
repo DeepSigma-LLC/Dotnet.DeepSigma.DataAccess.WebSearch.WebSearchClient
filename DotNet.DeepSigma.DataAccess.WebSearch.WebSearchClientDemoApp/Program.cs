@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging.Console;
 using DeepSigma.DataAccess.WebSearch.WebSearchClient;
 using DeepSigma.DataAccess.WebSearch.WebSearchClient.Abstraction;
 using DeepSigma.DataAccess.WebSearch.UrlRetriever;
+using DeepSigma.DataAccess.WebSearch.WebSearchClient.Model;
 
 var services = new ServiceCollection();
 
@@ -24,40 +25,26 @@ await using var provider = services.BuildServiceProvider();
 
 ISearxngClient searxng = provider.GetRequiredService<ISearxngClient>();
 ILogger logger = provider.GetRequiredService<ILogger<Program>>();
+WebSearchClient webSearchClient = provider.GetRequiredService<WebSearchClient>();
+
 using CancellationTokenSource cts = new();
 CancellationToken ct = cts.Token;
 
-try
-{
-    var response = await searxng.SearchAsync(new SearchRequest(search ?? "unknown"), ct);
+List<ResponseExtractedContent>? extractedContents = await webSearchClient.SearchAndExtract(search ?? "unknown", ct);
 
-    foreach (var result in response.Results)
-    {
-        Console.WriteLine("__________________________");
-        Console.WriteLine($"{result.Engine}: {result.Title} — {result.Url}");
-        Console.WriteLine($"Relevance: {result.Score}");
-        Console.WriteLine(result.Snippet);
-        Console.WriteLine(result.Category is not null ? $"Category: {result.Category}" : "No category");
-       
+if(extractedContents == null)
+{
+    logger.LogWarning("No content was extracted for the query: {Query}", search);
+}
 
-        await WebPageRequester.GetData(result.Url);
-        Console.WriteLine("__________________________");
-
-        Console.WriteLine();
-    }
-       
-}
-catch (SearxngUnsupportedFormatException)
+foreach (var content in extractedContents ?? Enumerable.Empty<ResponseExtractedContent>())
 {
-    // JSON is disabled on this SearXNG instance — check search.formats in instance settings
-    logger.LogError("SearXNG instance does not support JSON responses");
-}
-catch (SearxngUnavailableException ex)
-{
-    logger.LogError(ex, "SearXNG instance is unreachable");
-}
-catch (SearxngException ex)
-{
-    // Catch-all for any other SearXNG-specific failure
-    logger.LogError(ex, "Search failed");
+    Console.WriteLine("__________________________");
+    Console.WriteLine($"Title   : {content.Title}");
+    Console.WriteLine($"Byline  : {content.Byline}");
+    Console.WriteLine($"Language: {content.Language}");
+    Console.WriteLine($"Date    : {content.PublishedAt}");
+    Console.WriteLine(content.MainText);
+    Console.WriteLine("__________________________");
+    Console.WriteLine();
 }
