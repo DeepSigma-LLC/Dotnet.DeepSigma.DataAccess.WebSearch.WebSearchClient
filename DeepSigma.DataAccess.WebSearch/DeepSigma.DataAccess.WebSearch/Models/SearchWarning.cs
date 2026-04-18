@@ -12,7 +12,4 @@ namespace DeepSigma.DataAccess.WebSearch.Models;
 /// The error type reported by SearXNG for the unresponsive engine, if applicable.
 /// Common values include <c>HTTP error</c>, <c>timeout</c>, and <c>no results</c>.
 /// </param>
-public sealed record SearchWarning(
-    string Message,
-    string? Engine = null,
-    string? ErrorCode = null);
+public sealed record SearchWarning(string Message, string? Engine = null, string? ErrorCode = null);

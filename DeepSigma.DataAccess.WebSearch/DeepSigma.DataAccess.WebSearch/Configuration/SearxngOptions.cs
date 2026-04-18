@@ -17,15 +17,23 @@ public sealed class SearxngOptions
     /// </summary>
     public Uri BaseUri { get; set; } = null!;
 
-    /// <summary>Per-attempt timeout. Defaults to 10 seconds.</summary>
+    /// <summary>
+    /// Per-attempt timeout. Defaults to 10 seconds.
+    /// </summary>
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
-    /// <summary>Path to the search endpoint. Defaults to /search.</summary>
+    /// <summary>
+    /// Path to the search endpoint. Defaults to /search.
+    /// </summary>
     public string SearchPath { get; set; } = "/search";
 
-    /// <summary>Optional User-Agent header value sent with every request.</summary>
+    /// <summary>
+    /// Optional User-Agent header value sent with every request.
+    /// </summary>
     public string? UserAgent { get; set; }
 
-    /// <summary>Probe the instance for JSON-format support at startup.</summary>
+    /// <summary>
+    /// Probe the instance for JSON-format support at startup.
+    /// </summary>
     public bool ProbeInstanceOnStartup { get; set; } = false;
 }

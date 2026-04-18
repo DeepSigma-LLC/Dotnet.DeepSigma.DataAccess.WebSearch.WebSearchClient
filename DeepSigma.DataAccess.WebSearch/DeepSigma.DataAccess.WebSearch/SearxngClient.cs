@@ -13,7 +13,7 @@ namespace DeepSigma.DataAccess.WebSearch;
 /// <summary>
 /// Default implementation of <see cref="ISearxngClient"/> that communicates with a SearXNG
 /// instance over HTTP using a typed <see cref="HttpClient"/> managed by
-/// <see cref="System.Net.Http.IHttpClientFactory"/>.
+/// <see cref="IHttpClientFactory"/>.
 /// </summary>
 /// <remarks>
 /// Register this client via <see cref="ServiceCollectionExtensions.AddSearxngClient"/> rather than
@@ -32,14 +32,11 @@ public sealed class SearxngClient : ISearxngClient
     /// </summary>
     /// <param name="httpClient">
     /// The typed <see cref="HttpClient"/> configured and injected by
-    /// <see cref="System.Net.Http.IHttpClientFactory"/>.
+    /// <see cref="IHttpClientFactory"/>.
     /// </param>
     /// <param name="options">The resolved <see cref="SearxngOptions"/> for this client.</param>
     /// <param name="logger">Logger used to record query latency and result counts.</param>
-    public SearxngClient(
-        HttpClient httpClient,
-        IOptions<SearxngOptions> options,
-        ILogger<SearxngClient> logger)
+    public SearxngClient(HttpClient httpClient, IOptions<SearxngOptions> options, ILogger<SearxngClient> logger)
     {
         _httpClient = httpClient;
         _options = options;
@@ -78,9 +75,7 @@ public sealed class SearxngClient : ISearxngClient
     ///   </item>
     /// </list>
     /// </remarks>
-    public async Task<SearchResponse> SearchAsync(
-        SearchRequest request,
-        CancellationToken cancellationToken = default)
+    public async Task<SearchResponse> SearchAsync(SearchRequest request, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
 

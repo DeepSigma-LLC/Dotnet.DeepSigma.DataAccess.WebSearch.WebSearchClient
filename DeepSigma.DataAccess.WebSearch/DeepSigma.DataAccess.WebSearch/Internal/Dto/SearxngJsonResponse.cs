@@ -10,7 +10,9 @@ namespace DeepSigma.DataAccess.WebSearch.Internal.Dto;
 /// </summary>
 internal sealed class SearxngJsonResponse
 {
-    /// <summary>The list of individual search result objects.</summary>
+    /// <summary>
+    /// The list of individual search result objects.
+    /// </summary>
     [JsonPropertyName("results")]
     public List<SearxngJsonResult>? Results { get; set; }
 
@@ -21,11 +23,15 @@ internal sealed class SearxngJsonResponse
     [JsonPropertyName("number_of_results")]
     public long? NumberOfResults { get; set; }
 
-    /// <summary>Inline answers generated directly by SearXNG or a contributing engine, if any.</summary>
+    /// <summary>
+    /// Inline answers generated directly by SearXNG or a contributing engine, if any.
+    /// </summary>
     [JsonPropertyName("answers")]
     public List<string>? Answers { get; set; }
 
-    /// <summary>Spelling corrections or alternative query suggestions returned by SearXNG, if any.</summary>
+    /// <summary>
+    /// Spelling corrections or alternative query suggestions returned by SearXNG, if any.
+    /// </summary>
     [JsonPropertyName("corrections")]
     public List<string>? Corrections { get; set; }
 
@@ -37,7 +43,9 @@ internal sealed class SearxngJsonResponse
     [JsonPropertyName("infoboxes")]
     public List<JsonElement>? Infoboxes { get; set; }
 
-    /// <summary>Alternative query suggestions returned by SearXNG, if any.</summary>
+    /// <summary>
+    /// Alternative query suggestions returned by SearXNG, if any.
+    /// </summary>
     [JsonPropertyName("suggestions")]
     public List<string>? Suggestions { get; set; }
 

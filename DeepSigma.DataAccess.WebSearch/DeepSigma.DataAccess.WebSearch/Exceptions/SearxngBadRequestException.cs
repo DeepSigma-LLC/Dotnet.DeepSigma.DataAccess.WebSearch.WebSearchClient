@@ -16,8 +16,8 @@ public sealed class SearxngBadRequestException : SearxngException
     /// </summary>
     /// <param name="message">A message that describes the error.</param>
     /// <param name="statusCode">The HTTP status code returned by the SearXNG instance.</param>
-    public SearxngBadRequestException(string message, int statusCode) : base(message)
-        => StatusCode = statusCode;
+    public SearxngBadRequestException(string message, int statusCode) 
+        : base(message) => StatusCode = statusCode;
 
     /// <summary>
     /// Initializes a new instance with the specified error message, HTTP status code, and

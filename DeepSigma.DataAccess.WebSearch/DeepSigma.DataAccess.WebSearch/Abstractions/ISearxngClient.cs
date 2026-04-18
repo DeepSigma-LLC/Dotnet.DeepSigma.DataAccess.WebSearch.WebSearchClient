@@ -6,7 +6,7 @@ namespace DeepSigma.DataAccess.WebSearch;
 /// Defines the contract for executing searches against a SearXNG instance.
 /// </summary>
 /// <remarks>
-/// Implementations are expected to be registered as a typed <see cref="System.Net.Http.HttpClient"/>
+/// Implementations are expected to be registered as a typed <see cref="HttpClient"/>
 /// via <see cref="ServiceCollectionExtensions.AddSearxngClient"/>. The interface is intentionally
 /// provider-neutral so that alternative search backends can be swapped in behind the same abstraction.
 /// </remarks>
@@ -42,7 +42,5 @@ public interface ISearxngClient
     /// <exception cref="Exceptions.SearxngParseException">
     /// Thrown when the response body cannot be deserialized into the expected shape.
     /// </exception>
-    Task<SearchResponse> SearchAsync(
-        SearchRequest request,
-        CancellationToken cancellationToken = default);
+    Task<SearchResponse> SearchAsync(SearchRequest request, CancellationToken cancellationToken = default);
 }

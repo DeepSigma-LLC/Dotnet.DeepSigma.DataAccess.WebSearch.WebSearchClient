@@ -10,7 +10,7 @@ namespace DeepSigma.DataAccess.WebSearch;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers <see cref="ISearxngClient"/> with a typed <see cref="System.Net.Http.HttpClient"/>,
+    /// Registers <see cref="ISearxngClient"/> with a typed <see cref="HttpClient"/>,
     /// options validation, and a standard resilience pipeline (retry + circuit breaker + timeout).
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection"/> to add services to.</param>
@@ -18,13 +18,11 @@ public static class ServiceCollectionExtensions
     /// <returns>The original <paramref name="services"/> instance to enable method chaining.</returns>
     /// <remarks>
     /// <see cref="SearxngOptions"/> are validated eagerly at application startup via
-    /// <c>ValidateOnStart</c>. The <see cref="System.Net.Http.HttpClient"/> timeout is set to
-    /// <see cref="System.Threading.Timeout.InfiniteTimeSpan"/> so that the resilience pipeline's
+    /// <c>ValidateOnStart</c>. The <see cref="HttpClient"/> timeout is set to
+    /// <see cref="Timeout.InfiniteTimeSpan"/> so that the resilience pipeline's
     /// attempt timeout takes precedence rather than the hard client timeout.
     /// </remarks>
-    public static IServiceCollection AddSearxngClient(
-        this IServiceCollection services,
-        Action<SearxngOptions> configure)
+    public static IServiceCollection AddSearxngClient(this IServiceCollection services, Action<SearxngOptions> configure)
     {
         services.AddOptions<SearxngOptions>()
             .Configure(configure)
@@ -65,9 +63,7 @@ public static class ServiceCollectionExtensions
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="options"/> is <see langword="null"/>.
     /// </exception>
-    public static IServiceCollection AddSearxngClient(
-        this IServiceCollection services,
-        SearxngOptions options)
+    public static IServiceCollection AddSearxngClient(this IServiceCollection services, SearxngOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
         return services.AddSearxngClient(o =>

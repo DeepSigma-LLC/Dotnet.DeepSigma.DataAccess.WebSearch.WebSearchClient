@@ -30,11 +30,9 @@ internal static class SearxngQueryBuilder
     /// </returns>
     internal static string Build(SearchRequest request)
     {
-        var parts = new List<string>
-        {
-            $"q={Uri.EscapeDataString(request.Query)}",
-            "format=json"
-        };
+        List<string> parts = [
+            $"q={Uri.EscapeDataString(request.Query)}", 
+            "format=json"];
 
         if (request.Page is int p)
             parts.Add($"pageno={p.ToString(CultureInfo.InvariantCulture)}");

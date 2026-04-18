@@ -4,7 +4,7 @@ using DeepSigma.DataAccess.WebSearch.Internal.Dto;
 namespace DeepSigma.DataAccess.WebSearch.Internal;
 
 /// <summary>
-/// Source-generated <see cref="System.Text.Json.Serialization.JsonSerializerContext"/> used to
+/// Source-generated <see cref="JsonSerializerContext"/> used to
 /// deserialize <see cref="SearxngJsonResponse"/> without runtime reflection.
 /// </summary>
 /// <remarks>

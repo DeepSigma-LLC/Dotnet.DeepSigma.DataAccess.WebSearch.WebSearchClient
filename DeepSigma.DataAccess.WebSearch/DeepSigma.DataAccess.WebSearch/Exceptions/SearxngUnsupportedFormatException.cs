@@ -16,7 +16,8 @@ public sealed class SearxngUnsupportedFormatException : SearxngException
     /// Initializes a new instance with the specified error message.
     /// </summary>
     /// <param name="message">A message describing the unsupported format condition.</param>
-    public SearxngUnsupportedFormatException(string message) : base(message) { }
+    public SearxngUnsupportedFormatException(string message) 
+        : base(message) { }
 
     /// <summary>
     /// Initializes a new instance with the specified error message and a reference to the
