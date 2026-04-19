@@ -137,12 +137,7 @@ public class WebSearchClient<TSearchOptions>(
             logger.LogDebug("Extracted content from {Url}", url);
             return content;
         }
-        catch (OperationCanceledException)
-        {
-            logger.LogWarning("Processing cancelled for URL: {Url}", url);
-            throw;
-        }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not OperationCanceledException)
         {
             logger.LogError(ex, "Failed to extract content from {Url}", url);
             return new ResponseExtractedContent(

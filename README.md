@@ -27,8 +27,8 @@ This package ships a single public class, `WebSearchClient<TSearchOptions>`, tha
 
 | Dependency | Package | Responsibility |
 |---|---|---|
-| `IUrlRetriver<TSearchOptions>` | `DeepSigma.DataAccess.WebSearch.UrlRetriever` | Sends the query to a search backend and returns result URLs |
-| `IHtmlRetriver` | `DeepSigma.DataAccess.WebSearch.UrlRetriever` | Fetches raw HTML for a given URL |
+| `IUrlRetriever<TSearchOptions>` | `DeepSigma.DataAccess.WebSearch.UrlRetriever` | Sends the query to a search backend and returns result URLs |
+| `IHtmlRetriever` | `DeepSigma.DataAccess.WebSearch.UrlRetriever` | Fetches raw HTML for a given URL |
 | `IContentExtractor` | `DeepSigma.DataAccess.WebSearch.ContentExtraction` | Parses HTML and extracts structured content |
 
 Interfaces and domain models (`ResponseUrlRetrival`, `ResponseHtmlContent`, `ResponseExtractedContent`) live in `DeepSigma.DataAccess.WebSearch.Abstraction`.
@@ -37,8 +37,8 @@ Interfaces and domain models (`ResponseUrlRetrival`, `ResponseHtmlContent`, `Res
 flowchart LR
     App["Your App"]
     WSC["WebSearchClient&lt;TSearchOptions&gt;"]
-    UR["IUrlRetriver"]
-    HR["IHtmlRetriver"]
+    UR["IUrlRetriever"]
+    HR["IHtmlRetriever"]
     CE["IContentExtractor"]
     Backend["Search Backend<br/>(e.g. SearXNG)"]
     Web["Target Web Pages"]
@@ -54,8 +54,8 @@ flowchart LR
 **Data flow:**
 
 1. Caller invokes `SearchAndExtract(query, options, maxConcurrency, ct)` on `WebSearchClient`.
-2. `IUrlRetriver` queries the search backend and returns a list of URLs.
-3. Each URL is fetched via `IHtmlRetriver` in parallel, throttled by a `SemaphoreSlim` (default: 8 concurrent requests).
+2. `IUrlRetriever` queries the search backend and returns a list of URLs.
+3. Each URL is fetched via `IHtmlRetriever` in parallel, throttled by a `SemaphoreSlim` (default: 8 concurrent requests).
 4. Each HTML document is parsed by `IContentExtractor` into a `ResponseExtractedContent`.
 5. Results are aggregated and returned; per-URL failures produce a `ResponseExtractedContent` with `Error = true`.
 
@@ -98,7 +98,7 @@ services.AddSearxngClient(new SearxngOptions
 services.AddWebPageDataExtraction();
 
 // Register the orchestrator.
-services.AddSingleton<WebSearchClient<SearchRequestOptions>>();
+services.AddWebSearchClient<SearchRequestOptions>();
 
 await using var provider = services.BuildServiceProvider();
 var client = provider.GetRequiredService<WebSearchClient<SearchRequestOptions>>();
@@ -128,14 +128,14 @@ See [Program.cs](DotNet.DeepSigma.DataAccess.WebSearch.WebSearchClientDemoApp/Pr
 
 ### `WebSearchClient<TSearchOptions>`
 
-Generic orchestrator. `TSearchOptions` is the options type understood by the registered `IUrlRetriver<TSearchOptions>` — for the SearXNG retriever it is `SearchRequestOptions`.
+Generic orchestrator. `TSearchOptions` is the options type understood by the registered `IUrlRetriever<TSearchOptions>` — for the SearXNG retriever it is `SearchRequestOptions`.
 
 **Constructor** (resolved via DI):
 
 ```csharp
 WebSearchClient(
-    IUrlRetriver<TSearchOptions> urlRetriver,
-    IHtmlRetriver                 htmlRetriver,
+    IUrlRetriever<TSearchOptions> urlRetriever,
+    IHtmlRetriever                htmlRetriever,
     IContentExtractor             contentExtractor,
     ILogger<WebSearchClient<TSearchOptions>> logger)
 ```
@@ -184,8 +184,8 @@ Fields populated on a successful extraction (from the `Abstraction` package):
 
 | Failure | Behavior |
 |---|---|
-| `IUrlRetriver` throws (backend unreachable, bad response, etc.) | The exception is logged and `SearchAndExtract` returns `null`. |
-| `IHtmlRetriver` or `IContentExtractor` throws for a single URL | The exception is logged and a `ResponseExtractedContent` with `Error = true` and the message in `ErrorMessage` is included in the result list. |
+| `IUrlRetriever` throws (backend unreachable, bad response, etc.) | The exception is logged and `SearchAndExtract` returns `null`. |
+| `IHtmlRetriever` or `IContentExtractor` throws for a single URL | The exception is logged and a `ResponseExtractedContent` with `Error = true` and the message in `ErrorMessage` is included in the result list. |
 | `OperationCanceledException` at any stage | Logged as a warning and rethrown to the caller. |
 
 Exception types and HTTP-level error classification are the responsibility of the underlying `UrlRetriever` and `ContentExtraction` packages — see their READMEs.
@@ -201,8 +201,6 @@ docker compose up
 ```
 
 This exposes SearXNG at `http://localhost:8080` with `json` added to `search.formats`, matching the `BaseUri` in the quick-start example.
-
----
 
 ---
 

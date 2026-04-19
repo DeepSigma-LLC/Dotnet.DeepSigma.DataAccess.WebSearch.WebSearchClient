@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using DeepSigma.DataAccess.WebSearch.WebSearchClient;
 using DeepSigma.DataAccess.WebSearch.UrlRetriever;
-using DeepSigma.DataAccess.WebSearch.Abstraction;
 using DeepSigma.DataAccess.WebSearch.UrlRetriever.Models;
 using DeepSigma.DataAccess.WebSearch.Abstraction.Model;
 using DeepSigma.DataAccess.WebSearch.ContentExtraction.Extensions;
@@ -23,9 +22,6 @@ services.AddWebSearchClient<SearchRequestOptions>();
 await using var provider = services.BuildServiceProvider();
 
 ILogger logger = provider.GetRequiredService<ILogger<Program>>();
-IUrlRetriever<SearchRequestOptions> urlRetriever = provider.GetRequiredService<IUrlRetriever<SearchRequestOptions>>();
-IContentExtractor contentExtractor = provider.GetRequiredService<IContentExtractor>();
-IHtmlRetriever htmlRetriever = provider.GetRequiredService<IHtmlRetriever>();
 WebSearchClient<SearchRequestOptions> webSearchClient = provider.GetRequiredService<WebSearchClient<SearchRequestOptions>>();
 
 using CancellationTokenSource cts = new();
