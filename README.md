@@ -470,7 +470,7 @@ flowchart TD
 
 | Component | Package | Role |
 |---|---|---|
-| `WebSearchClient<TSearchOptions>` | `DeepSigma.DataAccess.WebSearch.WebSearchClient` | Orchestrator — coordinates URL retrieval, HTML fetching, and content extraction with bounded concurrency |
+| `WebSearchClient<TSearchOptions>` | `DeepSigma.DataAccess.WebSearch.WebSearchClient` | Orchestrator â€” coordinates URL retrieval, HTML fetching, and content extraction with bounded concurrency |
 | `IUrlRetriver<TSearchOptions>` | `DeepSigma.DataAccess.WebSearch.UrlRetriever` | Queries a SearXNG instance and returns a list of result URLs |
 | `IHtmlRetriver` | `DeepSigma.DataAccess.WebSearch.UrlRetriever` | Fetches raw HTML from a given URL |
 | `IContentExtractor` | `DeepSigma.DataAccess.WebSearch.ContentExtraction` | Parses HTML and extracts structured content (title, byline, main text, etc.) |
