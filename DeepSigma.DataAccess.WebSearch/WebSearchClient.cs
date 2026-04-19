@@ -28,13 +28,12 @@ public class WebSearchClient<TSearchOptions>(
     /// </summary>
     /// <param name="query">The search query.</param>
     /// <param name="searchOptions">The search options.</param>
+    /// <param name="maxConcurrency">The maximum number of URLs to extract concurrently. Must be greater than zero. Defaults to 8.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
     /// <returns>A list of ResponseExtractedContent objects containing the extracted content from each URL. The list will not
     /// include entries for URLs where extraction failed or returned null.</returns>
-    public async Task<List<ResponseExtractedContent>?> SearchAndExtract(string query, TSearchOptions searchOptions, CancellationToken cancellationToken = default)
+    public async Task<List<ResponseExtractedContent>?> SearchAndExtract(string query, TSearchOptions searchOptions, int maxConcurrency = 8, CancellationToken cancellationToken = default)
     {
-        const int maxConcurrency = 8;
-
         try
         {
             List<ResponseUrlRetrival> response = await urlRetriver.SearchAsync(query, searchOptions, cancellationToken);
