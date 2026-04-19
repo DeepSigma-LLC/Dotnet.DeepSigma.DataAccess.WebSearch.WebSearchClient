@@ -14,3 +14,6 @@ search:
   formats:
     - html
     - json
+    
+server:
+  secret_key: "3f6c0a9f2b9140d5a8d3c7e1f4b8a2c9e7d1f6a3b5c8d0e2f4a6b8c1d3e5f7"
