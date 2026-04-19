@@ -17,7 +17,6 @@ This package is the glue layer. The actual URL retrieval, HTML fetching, and con
 - [API Reference](#api-reference)
 - [Error Handling](#error-handling)
 - [Running SearXNG Locally](#running-searxng-locally)
-- [Known Issues](#known-issues)
 - [License](#license)
 
 ---
@@ -204,10 +203,6 @@ docker compose up
 This exposes SearXNG at `http://localhost:8080` with `json` added to `search.formats`, matching the `BaseUri` in the quick-start example.
 
 ---
-
-## Known Issues
-
-- The `IUrlRetriver` interface name in the upstream `Abstraction` package is misspelled (missing an `e`). Fixing it is a breaking change and must happen in that package; this repo uses the spelling as-published.
 
 ---
 

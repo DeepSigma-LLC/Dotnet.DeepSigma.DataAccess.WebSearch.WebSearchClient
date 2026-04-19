@@ -23,9 +23,9 @@ services.AddSingleton<WebSearchClient<SearchRequestOptions>>();
 await using var provider = services.BuildServiceProvider();
 
 ILogger logger = provider.GetRequiredService<ILogger<Program>>();
-IUrlRetriver<SearchRequestOptions> urlRetriver = provider.GetRequiredService<IUrlRetriver<SearchRequestOptions>>();
+IUrlRetriever<SearchRequestOptions> urlRetriever = provider.GetRequiredService<IUrlRetriever<SearchRequestOptions>>();
 IContentExtractor contentExtractor = provider.GetRequiredService<IContentExtractor>();
-IHtmlRetriver searxng = provider.GetRequiredService<IHtmlRetriver>();
+IHtmlRetriever htmlRetriever = provider.GetRequiredService<IHtmlRetriever>();
 WebSearchClient<SearchRequestOptions> webSearchClient = provider.GetRequiredService<WebSearchClient<SearchRequestOptions>>();
 
 using CancellationTokenSource cts = new();

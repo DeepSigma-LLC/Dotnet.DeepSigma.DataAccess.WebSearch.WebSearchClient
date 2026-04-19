@@ -7,21 +7,21 @@ namespace DeepSigma.DataAccess.WebSearch.WebSearchClient;
 /// <summary>
 /// A client that performs web searches, retrieves URLs, and extracts content from those URLs.
 /// </summary>
-/// <param name="urlRetriver">The URL retriever used to fetch URLs based on a query.</param>
-/// <param name="htmlRetriver">The HTML retriever used to fetch the HTML content of a web page.</param>
+/// <param name="urlRetriever">The URL retriever used to fetch URLs based on a query.</param>
+/// <param name="htmlRetriever">The HTML retriever used to fetch the HTML content of a web page.</param>
 /// <param name="contentExtractor">The content extractor used to extract content from HTML.</param>
 /// <param name="logger">The logger used to log information and errors.</param>
 public class WebSearchClient<TSearchOptions>(
-    IUrlRetriver<TSearchOptions> urlRetriver,
-    IHtmlRetriver htmlRetriver,
+    IUrlRetriever<TSearchOptions> urlRetriever,
+    IHtmlRetriever htmlRetriever,
     IContentExtractor contentExtractor,
     ILogger<WebSearchClient<TSearchOptions>> logger)
     where TSearchOptions : class
 {
     readonly ILogger<WebSearchClient<TSearchOptions>> logger = logger;
-    readonly IUrlRetriver<TSearchOptions> urlRetriver = urlRetriver;
+    readonly IUrlRetriever<TSearchOptions> urlRetriever = urlRetriever;
     readonly IContentExtractor contentExtractor = contentExtractor;
-    readonly IHtmlRetriver htmlRetriver = htmlRetriver;
+    readonly IHtmlRetriever htmlRetriever = htmlRetriever;
 
     /// <summary>
     /// Searches for the given query, retrieves URLs, and extracts content from each URL.
@@ -38,7 +38,7 @@ public class WebSearchClient<TSearchOptions>(
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maxConcurrency);
         try
         {
-            List<ResponseUrlRetrival> response = await urlRetriver.SearchAsync(query, searchOptions, cancellationToken);
+            List<ResponseUrlRetrival> response = await urlRetriever.SearchAsync(query, searchOptions, cancellationToken);
 
             return await ExtractAllFromURLs(
                 response.Select(x => x.Url),
@@ -131,8 +131,8 @@ public class WebSearchClient<TSearchOptions>(
 
             logger.LogInformation("Processing URL: {Url}", url);
 
-            ResponseHtmlContent responseHtmlContent = await htmlRetriver.FetchContentAsync(url, cancellationToken);
-            ResponseExtractedContent content = await contentExtractor.ExtractedContentAsync(responseHtmlContent, cancellationToken);
+            ResponseHtmlContent responseHtmlContent = await htmlRetriever.FetchContentAsync(url, cancellationToken);
+            ResponseExtractedContent content = await contentExtractor.ExtractContentAsync(responseHtmlContent, cancellationToken);
 
             logger.LogInformation("Extracted content from {Url}", url);
             return content;
@@ -148,6 +148,19 @@ public class WebSearchClient<TSearchOptions>(
             return new ResponseExtractedContent(
                 MainText: string.Empty,
                 Title: string.Empty,
+                Language: null,
+                Snippet: null,
+                Byline: null,
+                Summary: null,
+                PublishedAt: null,
+                ParsedUrls: null,
+                Category: null,
+                PrettyUrl: null,
+                Template: null,
+                Thumbnail: null,
+                ImageUrl: null,
+                Author: null,
+                SourceHtmlContent: null!,
                 Error: true,
                 ErrorMessage: [ex.Message]
             );
