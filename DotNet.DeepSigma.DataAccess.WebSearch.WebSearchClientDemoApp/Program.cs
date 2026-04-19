@@ -35,6 +35,7 @@ SearchRequestOptions searchRequestOptions = new()
 {
     Engines = ["duckduckgo", "brave", "bing"],
     Language = "en",
+    TimeRange = "day"
 };
 
 Console.WriteLine("Enter search query:");
@@ -58,7 +59,6 @@ if (results is null || results.Count == 0)
     return;
 }
 
-
 foreach (var content in results ?? [])
 {
     Console.WriteLine("__________________________");
@@ -68,10 +68,14 @@ foreach (var content in results ?? [])
     }
     else
     {
-        Console.WriteLine($"Title   : {content.Title}");
-        Console.WriteLine($"Byline  : {content.Byline}");
+        Console.WriteLine($"$Url: {content.SourceHtmlContent?.Url}");
+        Console.WriteLine($"Title: {content.Title}");
+        Console.WriteLine($"Search Engine: {content.SourceHtmlContent?.SourceUrlRetrival?.SearchEngine}");
+        Console.WriteLine($"Relevance Score: {content.SourceHtmlContent?.SourceUrlRetrival?.EngineRelevanceScore}");
+        Console.WriteLine($"Publish Date From Search Engine: {content.SourceHtmlContent?.SourceUrlRetrival?.PublishedDate}");
+        Console.WriteLine($"Byline: {content.Byline}");
         Console.WriteLine($"Language: {content.Language}");
-        Console.WriteLine($"Date    : {content.PublishedAt}");
+        Console.WriteLine($"Extracted Published Date: {content.PublishedAt}");
         Console.WriteLine($"Text len: {content.MainText?.Length ?? 0}");
         Console.WriteLine(content.MainText?[..Math.Min(content.MainText.Length, 500)]);
     }

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DeepSigma.DataAccess.WebSearch.ContentExtraction" Version="2.0.0" />
+    <PackageReference Include="DeepSigma.DataAccess.WebSearch.ContentExtraction" Version="2.0.1" />
     <PackageReference Include="DeepSigma.DataAccess.WebSearch.UrlRetriever" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.6" />
