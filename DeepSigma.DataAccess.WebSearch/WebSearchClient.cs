@@ -1,6 +1,7 @@
 ﻿using DeepSigma.DataAccess.WebSearch.Abstraction;
 using DeepSigma.DataAccess.WebSearch.Abstraction.Model;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace DeepSigma.DataAccess.WebSearch.WebSearchClient;
 
@@ -135,7 +136,7 @@ public class WebSearchClient<TSearchOptions>(
                 SourceHtmlContent: new ResponseHtmlContent(
                     Html: string.Empty,
                     FetchedAt: DateTimeOffset.UtcNow,
-                    StatusCode: System.Net.HttpStatusCode.BadRequest,
+                    StatusCode: HttpStatusCode.BadRequest,
                     Error: true,
                     ErrorMessage: [ex.Message]
                 ),
