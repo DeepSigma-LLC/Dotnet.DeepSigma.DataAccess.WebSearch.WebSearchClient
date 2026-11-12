@@ -3,7 +3,7 @@ using DeepSigma.DataAccess.WebSearch.Abstraction.Model;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace DeepSigma.DataAccess.WebSearch.WebSearchClient;
+namespace DeepSigma.DataAccess.WebSearch.Client;
 
 /// <summary>
 /// A client that performs web searches, retrieves URLs, and extracts content from those URLs.

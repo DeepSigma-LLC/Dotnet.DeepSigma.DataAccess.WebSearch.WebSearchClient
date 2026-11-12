@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>DeepSigma.DataAccess.WebSearch.WebSearchClient</Title>
-    <Version>1.0.2</Version>
+    <Title>DeepSigma.DataAccess.WebSearch.Client</Title>
+    <Version>2.0.0</Version>
     <PackageProjectUrl>https://github.com/DeepSigma-LLC/Dotnet.DeepSigma.DataAccess.WebSearch.WebSearchClient</PackageProjectUrl>
     <Description>.NET orchestrator that turns a search query into structured page content — retrieves URLs, fetches HTML in parallel, and extracts structured content.</Description>
     <RepositoryUrl>https://github.com/DeepSigma-LLC/Dotnet.DeepSigma.DataAccess.WebSearch.WebSearchClient</RepositoryUrl>
@@ -25,11 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DeepSigma.DataAccess.WebSearch.Abstraction" Version="2.0.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.6" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.6" />
-    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.5.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.6" />
+    <PackageReference Include="DeepSigma.DataAccess.WebSearch.Abstraction" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>

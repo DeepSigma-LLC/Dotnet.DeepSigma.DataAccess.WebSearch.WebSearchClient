@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DeepSigma.DataAccess.WebSearch.WebSearchClient;
+namespace DeepSigma.DataAccess.WebSearch.Client;
 
 /// <summary>
 /// DI extensions for registering <see cref="WebSearchClient{TSearchOptions}"/>.

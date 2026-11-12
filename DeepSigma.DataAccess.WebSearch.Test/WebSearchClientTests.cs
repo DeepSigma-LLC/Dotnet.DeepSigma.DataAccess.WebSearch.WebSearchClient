@@ -1,7 +1,7 @@
 using System.Net;
 using DeepSigma.DataAccess.WebSearch.Abstraction;
 using DeepSigma.DataAccess.WebSearch.Abstraction.Model;
-using DeepSigma.DataAccess.WebSearch.WebSearchClient;
+using DeepSigma.DataAccess.WebSearch.Client;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 

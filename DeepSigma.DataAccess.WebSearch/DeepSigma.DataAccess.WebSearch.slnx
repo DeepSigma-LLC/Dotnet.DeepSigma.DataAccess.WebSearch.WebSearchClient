@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="../DeepSigma.DataAccess.WebSearch.Test/DeepSigma.DataAccess.WebSearch.WebSearchClient.Test.csproj" />
   <Project Path="../DotNet.DeepSigma.DataAccess.WebSearch.WebSearchClientDemoApp/DotNet.DeepSigma.DataAccess.WebSearch.DemoApp.csproj" Id="9547e8ae-12c2-49ab-9d7c-377cc7b0a740" />
-  <Project Path="DeepSigma.DataAccess.WebSearch.WebSearchClient.csproj" />
+  <Project Path="DeepSigma.DataAccess.WebSearch.Client.csproj" />
 </Solution>

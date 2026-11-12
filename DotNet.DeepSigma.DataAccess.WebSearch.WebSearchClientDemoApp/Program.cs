@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
-using DeepSigma.DataAccess.WebSearch.WebSearchClient;
+using DeepSigma.DataAccess.WebSearch.Client;
 using DeepSigma.DataAccess.WebSearch.UrlRetriever;
 using DeepSigma.DataAccess.WebSearch.UrlRetriever.Models;
 using DeepSigma.DataAccess.WebSearch.Abstraction;
